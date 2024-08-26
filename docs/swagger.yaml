@@ -1,0 +1,77 @@
+basePath: /
+definitions:
+  models.Auction:
+    properties:
+      bids:
+        items:
+          $ref: '#/definitions/models.Bid'
+        type: array
+      endTime:
+        type: string
+      id:
+        type: string
+      itemId:
+        type: string
+      sellerId:
+        type: string
+      status:
+        type: string
+    type: object
+  models.Bid:
+    properties:
+      bidAmount:
+        type: number
+      bidTime:
+        type: string
+      userId:
+        type: string
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: fiber@swagger.io
+    name: API Support
+  description: This is a sample swagger for Fiber
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Fiber Example API
+  version: "1.0"
+paths:
+  /auctions:
+    post:
+      consumes:
+      - application/json
+      description: Create a new auction in the system
+      parameters:
+      - description: Auction details
+        in: body
+        name: auction
+        required: true
+        schema:
+          $ref: '#/definitions/models.Auction'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Auction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Create a new auction
+      tags:
+      - auctions
+swagger: "2.0"
