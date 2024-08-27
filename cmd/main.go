@@ -6,9 +6,11 @@ import (
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/kornharem08/auction_example/config"
 	_ "github.com/kornharem08/auction_example/docs"
 	"github.com/kornharem08/auction_example/handlers"
 	"github.com/kornharem08/auction_example/lib/mongo"
+	"github.com/kornharem08/auction_example/lib/mongo/environ"
 )
 
 // @title Fiber Example API
@@ -22,8 +24,8 @@ import (
 // @host localhost:3000
 // @BasePath /
 func main() {
-	// cfg := environ.Load[config.Config]()
-	dbconn := mongo.NewConnection("mongodb://localhost:27017", "auction_management")
+	cfg := environ.Load[config.Config]()
+	dbconn := mongo.NewConnection("mongodb://localhost:27017", cfg.MongoDBDatabase)
 	defer dbconn.Close(context.Background())
 
 	app := fiber.New()
