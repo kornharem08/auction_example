@@ -1,7 +1,7 @@
 package main
 
 import (
-	"context"
+	"log"
 
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
@@ -9,9 +9,18 @@ import (
 	"github.com/kornharem08/auction_example/config"
 	_ "github.com/kornharem08/auction_example/docs"
 	"github.com/kornharem08/auction_example/handlers"
-	"github.com/kornharem08/auction_example/lib/mongo"
-	"github.com/kornharem08/auction_example/lib/mongo/environ"
+	"github.com/kornharem08/auction_example/lib/environ"
+	"github.com/kornharem08/auction_example/lib/mong"
 )
+
+// func init() {
+// 	hostname, err := os.Hostname()
+// 	if err != nil {
+// 		log.Fatalf("Error when get hostmane: %s", err)
+// 	}
+
+// 	log.Fatalf("Action start app  %s", hostname)
+// }
 
 // @title Fiber Example API
 // @version 1.0
@@ -25,8 +34,18 @@ import (
 // @BasePath /
 func main() {
 	cfg := environ.Load[config.Config]()
-	dbconn := mongo.NewConnection("mongodb://localhost:27017", cfg.MongoDBDatabase)
-	defer dbconn.Close(context.Background())
+	if cfg.MongoDBDatabase == "" {
+		log.Fatal("database name must be present")
+	}
+
+	dbconn, err := mong.New(cfg.MongoDBDatabase)
+	// New database connection
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Ensure connection close
+	defer dbconn.Close()
 
 	app := fiber.New()
 	app.Use(cors.New())

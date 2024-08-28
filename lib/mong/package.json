@@ -1,0 +1,17 @@
+{
+  "name": "mong",
+  "version": "0.0.0",
+  "description": "Wrapper of Mongo library.",
+  "main": "index.js",
+  "repository": "ssh://git@10.7.55.157:2222/otcsell/library/mong.git ",
+  "author": "chonlawit <chonlawit@odds.team>",
+  "license": "MIT",
+  "scripts": {
+    "husky:install": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "husky": "^8.0.1"
+  }
+}

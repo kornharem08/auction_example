@@ -3,7 +3,9 @@ package auction
 import (
 	"context"
 
-	"github.com/kornharem08/auction_example/lib/mongo"
+	"github.com/kornharem08/auction_example/config"
+	"github.com/kornharem08/auction_example/lib/environ"
+	"github.com/kornharem08/auction_example/lib/mong"
 	"github.com/kornharem08/auction_example/models"
 )
 
@@ -12,12 +14,12 @@ type IRepository interface {
 }
 
 type Repository struct {
-	Collection mongo.ICollection
+	Collection mong.ICollection
 }
 
-func NewRepository(dbconn mongo.IConnect) IRepository {
+func NewRepository(dbconn mong.IConnect) IRepository {
 	return &Repository{
-		Collection: mongo.NewCollection(dbconn.Database().Collection("auctions")),
+		Collection: dbconn.Database().Collection(environ.Load[config.Config]().AuctionsCollection),
 	}
 }
 

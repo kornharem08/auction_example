@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/kornharem08/auction_example/lib/mongo"
+	"github.com/kornharem08/auction_example/lib/mong"
 	"github.com/kornharem08/auction_example/models"
 	"github.com/kornharem08/auction_example/pkg/auction"
 )
@@ -17,7 +17,7 @@ type Handler struct {
 	auctionsService auction.IService
 }
 
-func NewHandler(dbconn mongo.IConnect) IHandler {
+func NewHandler(dbconn mong.IConnect) IHandler {
 	return &Handler{
 		auctionsService: auction.NewService(dbconn),
 	}

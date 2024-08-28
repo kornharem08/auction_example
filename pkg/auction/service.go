@@ -3,7 +3,7 @@ package auction
 import (
 	"context"
 
-	"github.com/kornharem08/auction_example/lib/mongo"
+	"github.com/kornharem08/auction_example/lib/mong"
 	"github.com/kornharem08/auction_example/models"
 )
 
@@ -15,7 +15,7 @@ type Service struct {
 	Repository IRepository
 }
 
-func NewService(dbconn mongo.IConnect) IRepository {
+func NewService(dbconn mong.IConnect) IRepository {
 	return &Service{
 		Repository: NewRepository(dbconn),
 	}
