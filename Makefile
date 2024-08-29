@@ -6,3 +6,6 @@ test:
 
 run:
 	go run cmd/main.go
+
+test-integration:
+	go test ./... -tags=integration -count=1
