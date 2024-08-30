@@ -9,6 +9,7 @@ import (
 
 type IService interface {
 	Create(ctx context.Context, data models.Auction) error
+	GetList(ctx context.Context) ([]models.Auction, error)
 }
 
 type Service struct {
@@ -23,4 +24,8 @@ func NewService(dbconn mong.IConnect) IRepository {
 
 func (service Service) Create(ctx context.Context, data models.Auction) error {
 	return service.Repository.Create(ctx, data)
+}
+
+func (service Service) GetList(ctx context.Context) ([]models.Auction, error) {
+	return service.Repository.GetList(ctx)
 }

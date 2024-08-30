@@ -59,6 +59,7 @@ func main() {
 
 	// Define routes
 	app.Post("/auctions", handlerAuctions.CreateAuction)
+	app.Get("/auctions", handlerAuctions.GetListAuction)
 
 	app.Listen(":3000")
 

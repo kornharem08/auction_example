@@ -11,6 +11,7 @@ import (
 
 type IHandler interface {
 	CreateAuction(c *fiber.Ctx) error
+	GetListAuction(c *fiber.Ctx) error
 }
 
 type Handler struct {
@@ -58,4 +59,31 @@ func (h *Handler) CreateAuction(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusCreated).JSON(newAuction)
+}
+
+// GetListAuction godoc
+// @Summary Get list of auctions
+// @Description Retrieves a list of all auctions
+// @Tags Auctions
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Auction
+// @Failure 400 {object} models.ErrorResponse
+// @Failure 500 {object} models.ErrorResponse
+// @Router /auctions [get]
+func (h *Handler) GetListAuction(c *fiber.Ctx) error {
+	// Create a context
+	ctx := c.Context()
+
+	// Call the GetList method from the service
+	auctions, err := h.auctionsService.GetList(ctx)
+	if err != nil {
+		// Return a 500 Internal Server Error if something goes wrong
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Failed to retrieve auctions",
+		})
+	}
+
+	// Return the list of auctions as a JSON response
+	return c.JSON(auctions)
 }

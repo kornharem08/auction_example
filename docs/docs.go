@@ -24,6 +24,42 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/auctions": {
+            "get": {
+                "description": "Retrieves a list of all auctions",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auctions"
+                ],
+                "summary": "Get list of auctions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Auction"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Create a new auction in the system",
                 "consumes": [
@@ -81,9 +117,6 @@ const docTemplate = `{
                     }
                 },
                 "endTime": {
-                    "type": "string"
-                },
-                "id": {
                     "type": "string"
                 },
                 "itemId": {

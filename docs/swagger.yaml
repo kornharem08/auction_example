@@ -8,8 +8,6 @@ definitions:
         type: array
       endTime:
         type: string
-      id:
-        type: string
       itemId:
         type: string
       sellerId:
@@ -45,6 +43,30 @@ info:
   version: "1.0"
 paths:
   /auctions:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of all auctions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Auction'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get list of auctions
+      tags:
+      - Auctions
     post:
       consumes:
       - application/json
