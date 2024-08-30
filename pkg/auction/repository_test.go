@@ -225,4 +225,15 @@ func TestRepository_GetList(t *testing.T) {
 		assert.Empty(t, auctions)
 	})
 
+	t.Run("Should return error when get list", func(t *testing.T) {
+		beforeEach()
+		defer afterEach()
+
+		ctx, cancel := context.WithCancel(ctx)
+		cancel()
+
+		_, err := repo.GetList(ctx)
+		assert.ErrorIs(t, err, context.Canceled)
+	})
+
 }
